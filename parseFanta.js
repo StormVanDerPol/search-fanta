@@ -31,7 +31,7 @@ const gramsByDocument = docs.map((doc) => triGram(doc));
 const vocabulary = Array.from(new Set(gramsByDocument.flat()));
 const vectors = new Map();
 let max = 0;
-const min = 0; // can be incorrect but it's always going to be the case
+const min = 0; // can be incorrect but it's always going to be the case in my case
 
 const normalize = (n, min, max) => (n - min) / (max - min);
 
@@ -59,20 +59,20 @@ for (const [key, vector] of vectors) {
 }
 
 function dotProduct(x, y) {
-  function dotp_sum(a, b) {
+  function dotpSum(a, b) {
     return a + b;
   }
-  function dotp_times(a, i) {
+  function dotpTimes(a, i) {
     return x[i] * y[i];
   }
-  return x.map(dotp_times).reduce(dotp_sum, 0);
+  return x.map(dotpTimes).reduce(dotpSum, 0);
 }
 
 function cosineSimilarity(A, B) {
-  var similarity =
+  return (
     dotProduct(A, B) /
-    (Math.sqrt(dotProduct(A, A)) * Math.sqrt(dotProduct(B, B)));
-  return similarity;
+    (Math.sqrt(dotProduct(A, A)) * Math.sqrt(dotProduct(B, B)))
+  );
 }
 
 const compare = (str, threshold = 0.3) => {
