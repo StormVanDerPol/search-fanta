@@ -9,10 +9,18 @@ function nGram(n, doc) {
   return nGrams;
 }
 
+const biGram = (str) => nGram(2, str);
+
 const triGram = (str) => nGram(3, str);
+
+const quadGram = (str) => nGram(4, str);
 
 const wordGram = (doc) => {
   return doc.split(' ').filter((w) => w && w !== ' ');
+};
+
+const comboGram = (doc) => {
+  return [...wordGram(doc), ...triGram(doc)];
 };
 
 const normalize = (n, min, max) => (n - min) / (max - min);
@@ -91,7 +99,7 @@ function FuzzySearcher(...intialDocuments) {
 
     seachGrams.forEach((gram) => {
       const gramIndex = this.vocabularyIndex.get(gram);
-      if (gramIndex) ++searchVector[gramIndex];
+      if (gramIndex) normalize(++searchVector[gramIndex], this.min, this.max);
     });
 
     const similar = [];
